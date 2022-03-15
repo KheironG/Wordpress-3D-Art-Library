@@ -81,24 +81,6 @@ function enqueue_frontend_scripts () {
 add_action( 'wp_enqueue_scripts', 'enqueue_frontend_scripts' );
 
 
-
-/**
- * Enqueues admin css and JS.
- *
- * @since  1.0
-*/
-function enqueue_admin_scripts () {
-    //Admin CSS
-   wp_enqueue_style( "admin CSS", get_template_directory_uri() . '/admin/css/admin.css', array(), "1.0", "all" );
-   //Admin JS
-   wp_enqueue_script( "admin JS", get_template_directory_uri() . '/admin/js/admin.js', array('jquery'), "1.0", "all" );
-
-}
-if ( is_admin() ) {
-    add_action( 'admin_enqueue_scripts', 'enqueue_admin_scripts' );
-}
-
-
 /**
  * Enables custom logo.
  *
@@ -120,6 +102,20 @@ add_action( 'after_setup_theme', 'custom_logo' );
 if ( is_admin() ) {
 
     /**
+     * Enqueues admin css and JS.
+     *
+     * @since  1.0
+    */
+    function enqueue_admin_scripts () {
+        //Admin CSS
+       wp_enqueue_style( "admin CSS", get_template_directory_uri() . '/admin/css/admin.css', array(), "1.0", "all" );
+       //Admin JS
+       wp_enqueue_script( "admin JS", get_template_directory_uri() . '/admin/js/admin.js', array('jquery'), "1.0", "all" );
+
+    }
+    add_action( 'admin_enqueue_scripts', 'enqueue_admin_scripts' );
+
+    /**
      * Adds Customizer to admin dashboard menu.
      *
      * @since  1.0
@@ -132,7 +128,7 @@ if ( is_admin() ) {
     			'admin-cuztomizer',
                 'customizer_callback',
     			'dashicons-schedule',
-    			10
+    			28
     		);
     	}
     add_action( 'admin_menu', 'admin_custom_options' );
@@ -174,7 +170,7 @@ if ( is_admin() ) {
     			'admin-cache-options',
                 'cache_options_callback',
     			'dashicons-schedule',
-    			25
+    			29
     		);
     	}
     add_action( 'admin_menu', 'admin_cache_options' );
@@ -201,6 +197,7 @@ function create_cpt_profile() {
             ),
             'show_ui'          => true,
             'show_in_menu'     => true,
+            'menu_position'    => 27,
             'supports'         => array( 'title', 'editor', 'custom-fields' ),
             'delete_with_user' => true,
             'menu_icon'        => 'dashicons-admin-users',
@@ -323,7 +320,7 @@ function create_cpt_blender() {
             'labels'                => array( 'name' => 'Blender Objects' ),
             'show_ui'               => true,
             'show_in_menu'          => true,
-            'menu_position'         => 9,
+            'menu_position'         => 26,
             'description'           => 'Blender Object',
             'supports'              => array( 'title', 'author','comments', 'thumbnail', 'excerpt' ),
             'menu_icon'             => 'dashicons-format-image',
