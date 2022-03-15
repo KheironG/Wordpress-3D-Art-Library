@@ -1,7 +1,5 @@
 <?php get_header();
-
 $query = parse_str( $_SERVER['QUERY_STRING'] );
-
 if ( is_user_logged_in() && strval( $current_user->ID ) === $post->post_author
     && current_user_can( 'edit_post', $post->ID ) && $action === 'edit' ) {
         require wp_make_link_relative( get_template_directory() . '/forms/form-add-blender-post.php' );
@@ -15,9 +13,8 @@ if ( is_user_logged_in() && strval( $current_user->ID ) === $post->post_author
         if ( !empty( $meta_field ) ) {
             $has_blender_meta = true; } }
     $blender_folder = str_replace( '-', '_', $post->post_name ) . '/';
-    $downloadable = get_post_meta( $post->ID, 'allow_download', true  );
-    $license      = get_post_meta( $post->ID, 'license', true );
-
+    $downloadable   = get_post_meta( $post->ID, 'allow_download', true  );
+    $license        = get_post_meta( $post->ID, 'license', true );
     ?>
     <div class="container-shadow container-1000">
         <div class="polygon">
@@ -35,7 +32,7 @@ if ( is_user_logged_in() && strval( $current_user->ID ) === $post->post_author
                     if ( $author_data->caps['administrator'] == 1 ) {
                         echo '<small><b>' . $author_data->display_name . '</b></small>';
                     } else {
-                        ?><a class="no-padding flex-container" href="<?php esc_attr_e( $author_profile_link ) ?>">
+                        ?><a class="no-padding flex-container" href="<?php echo get_home_url() . '/profile/' . $author_data->display_name ?>">
                             <small><b><?php echo $author_data->display_name ?></b></small>
                         </a><?php
                     }?>
@@ -142,11 +139,11 @@ if ( is_user_logged_in() && strval( $current_user->ID ) === $post->post_author
                 <!-- ARTIST SECTION STARTS HERE -->
                 <div class="blender-post-option hide" id="blender-artist-option">
                     <?php
+                    global $wpdb;
                     $author_profile_link  = get_user_meta( $post->post_author, 'profile_link', true );
                     $author_profile_ID    = get_user_meta( $post->post_author, 'profile_ID', true );
                     $author_portrait      = get_user_meta( $post->post_author, 'portrait_link', true );
-                    global $wpdb;
-                    $author_bio           = $wpdb->get_var( "SELECT post_content FROM wp_posts WHERE ID= $author_profile_ID ");
+                    $author_bio           = $wpdb->get_var( "SELECT post_content FROM wp_posts WHERE ID= $author_profile_ID");
                     ?>
                     <h5 class="blue-text">artist</h5>
                     <div>
