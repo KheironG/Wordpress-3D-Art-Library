@@ -48,11 +48,4 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
         </div>
     </div>
     </header>
-    <div id="private-links">
-        <?php
-        echo privateMenu( $current_user );
-        ?>
-    </div>
-    <div id="signed-in-as">
-        <small class="block">signed in as <small class="label"> <?php echo $current_user->display_name; ?></small></small>
-    </div>
+    <?php echo privateMenu( $current_user ); ?>

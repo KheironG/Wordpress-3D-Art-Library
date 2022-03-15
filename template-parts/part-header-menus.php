@@ -31,28 +31,31 @@ function headerMenu ( ) {
 function privateMenu( $user ) {
     if ( is_user_logged_in() && $user->ID != 0 ) {
     ?>
+    <div id="private-links">
         <a class="private-menu-icon" href="<?php echo $user->profile_link; ?>">
             <span class="fas fa-user fa-2x"></span>
             <small>profile</small>
         </a>
-
         <a class="private-menu-icon" href="<?php echo esc_url( '/creators-settings' ) ?>">
             <span class="fas fa-cog fa-2x"></span>
             <small>settings</small>
         </a>
-
         <a class="private-menu-icon" href="<?php echo esc_url( '/creators-upload' ) ?>">
             <span class="fas fa-plus-square fa-2x"></span>
             <small>create</small>
         </a>
-
         <a class="private-menu-icon" href="<?php echo esc_url( '/creators-gallery' ) ?>">
             <span class="fas fa-images fa-2x"></span>
             <small>gallery</small>
         </a>
+    </div>
+    <div id="signed-in-as">
+        <small class="block">signed in as <small class="label"> <?php echo $user->display_name; ?></small></small>
+    </div>
     <?php
     }
 }
+
 
 function signInOut() {
     if ( !is_user_logged_in() && $current_user->ID == 0 ) {
