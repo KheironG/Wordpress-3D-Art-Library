@@ -8,41 +8,35 @@ if ( !empty( $get_blender_file) ) {
     $file_ID      = array_key_first( $get_blender_file );
     $file_name    = $get_blender_file[$file_ID]->post_name . '.blend';
 }
-
-$categories         = wp_get_object_terms( $post->ID, 'blender_categories' );
-
+$categories       = wp_get_object_terms( $post->ID, 'blender_categories' );
 wp_nonce_field( 'blender_metabox_nonce_action', 'blender-metabox-nonce' );
 ?>
-
-<h3>blender file</h3>
 <div>
-    <label for="admin-blender-file">story</label>
+    <label for="admin-blender-story">story</label>
     <textarea name="admin-blender-story" rows="4" ><?php echo esc_html( $post->post_content ); ?></textarea>
 </div>
-
 <br>
-
+<br>
 <h3>blender file</h3>
-<div class="admin-flex-container">
-    <small class="label">file</label>
-        <?php
-        if ( !empty( $get_blender_file ) ) {
-            ?>
-            <div class="success-container"><?php echo $file_name; ?></div>
-            <?php
-        } else {
-            ?>
-            <div id="admin-blender-required" class="error-container">blender file is required</div>
-            <?php
-        }
+<?php
+    if ( !empty( $get_blender_file ) ) {
         ?>
-</div>
-
+        <div class="admin-flex-container">
+            <div class="success-container"><?php echo $file_name; ?></div>
+        </div>
+        <?php }
+    else {
+        ?>
+        <div class="admin-flex-container">
+            <div id="admin-blender-required" class="error-container">blender file is required</div>
+        </div>
+        <br>
+        <button type="button" class="button button-primary" name="button" onclick="uploadBlenderFile();">select file</button>
+        <small id="admin-upload-blender"></small>
+    <?php } ?>
 <br>
 <br>
-
 <h3>object meta</h3>
-
 <div class="admin-flex-container">
 
     <div>
@@ -111,12 +105,9 @@ wp_nonce_field( 'blender_metabox_nonce_action', 'blender-metabox-nonce' );
     </div>
 
 </div>
-
 <br>
 <br>
-
 <h3>options</h3>
-
 <div class="admin-flex-container">
     <div>
         <label for="admin-blender-license">license</label>
