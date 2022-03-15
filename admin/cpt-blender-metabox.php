@@ -1,15 +1,15 @@
 <?php
-$post_id          = get_the_ID();
-$blender_meta     = get_post_meta( $post_id, 'blender_meta', true );
-$license          = get_post_meta( $post_id, 'license', true  );
-$allow_download   = get_post_meta( $post_id, 'allow_download', true  );
-$get_blender_file = get_attached_media( 'application/octet-stream', $post_id );
+$blender_meta     = get_post_meta( get_the_ID(), 'blender_meta', true );
+$license          = get_post_meta( get_the_ID(), 'license', true  );
+$allow_download   = get_post_meta( get_the_ID(), 'allow_download', true  );
+$get_blender_file = get_attached_media( 'application/octet-stream', get_the_ID() );
 if ( !empty( $get_blender_file) ) {
     $file_ID      = array_key_first( $get_blender_file );
     $file_name    = $get_blender_file[$file_ID]->post_name . '.blend';
 }
-$categories       = wp_get_object_terms( $post->ID, 'blender_categories' );
+$categories       = wp_get_object_terms( get_the_ID(), 'blender_categories' );
 wp_nonce_field( 'blender_metabox_nonce_action', 'blender-metabox-nonce' );
+require wp_make_link_relative( get_template_directory() . '/template-parts/part-parts.php')
 ?>
 <div>
     <label for="admin-blender-story">story</label>
@@ -38,72 +38,21 @@ wp_nonce_field( 'blender_metabox_nonce_action', 'blender-metabox-nonce' );
 <br>
 <h3>object meta</h3>
 <div class="admin-flex-container">
-
-    <div>
-        <label for="admin-blender-triangles">triangles</label>
-        <input type="text" name="admin-blender-triangles" value="<?php esc_html_e( $blender_meta['triangles'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-quads">quads</label>
-        <input type="text" name="admin-blender-quads" value="<?php esc_html_e( $blender_meta['quads'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-polygons">polygons</label>
-        <input type="text" name="admin-blender-polygons" value="<?php esc_html_e( $blender_meta['polygons'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-vertices">vertices</label>
-        <input type="text" name="admin-blender-vertices" value="<?php esc_html_e( $blender_meta['vertices'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-pbr">pbr</label>
-        <input type="text" name="admin-blender-pbr" value="<?php esc_html_e( $blender_meta['pbr'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-textures">textures</label>
-        <input type="text" name="admin-blender-textures" value="<?php esc_html_e( $blender_meta['textures'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-materials">materials</label>
-        <input type="text" name="admin-blender-materials" value="<?php esc_html_e( $blender_meta['materials'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-uv-layers">uv layers</label>
-        <input type="text" name="admin-blender-uv-layers" value="<?php esc_html_e( $blender_meta['uv_layers'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-vertex-colours">vertex colours</label>
-        <input type="text" name="admin-blender-vertex-colours" value="<?php esc_html_e( $blender_meta['vertex_colours'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-animations">animations</label>
-        <input type="text" name="admin-blender-animations" value="<?php esc_html_e( $blender_meta['animations'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-morph-geo">morph geometries</label>
-        <input type="text" name="admin-blender-morph-geo" value="<?php esc_html_e( $blender_meta['morph_geo'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-rigged-geo">rigged geometries</label>
-        <input type="text" name="admin-blender-rigged-geo" value="<?php esc_html_e( $blender_meta['rigged_geo'] ); ?>">
-    </div>
-
-    <div>
-        <label for="admin-blender-scales">scales</label>
-        <input type="text" name="admin-blender-scales" value="<?php esc_html_e( $blender_meta['scales'] ); ?>">
-    </div>
-
+    <?php
+    echo adminTextInput( 'admin-blender-triangles', $blender_meta['triangles'], 'triangles' );
+    echo adminTextInput( 'admin-blender-quads', $blender_meta['quads'], 'quads' );
+    echo adminTextInput( 'admin-blender-polygons', $blender_meta['polygons'], 'polygons' );
+    echo adminTextInput( 'admin-blender-vertices', $blender_meta['vertices'], 'vertices' );
+    echo adminTextInput( 'admin-blender-pbr', $blender_meta['pbr'], 'pbr' );
+    echo adminTextInput( 'admin-blender-textures', $blender_meta['textures'], 'textures' );
+    echo adminTextInput( 'admin-blender-materials', $blender_meta['materials'], 'materials' );
+    echo adminTextInput( 'admin-blender-uv-layers', $blender_meta['uv_layers'], 'uv layers' );
+    echo adminTextInput( 'admin-blender-vertex-colours', $blender_meta['vertex_colours'], 'vertex colours' );
+    echo adminTextInput( 'admin-blender-animations', $blender_meta['animations'], 'animations' );
+    echo adminTextInput( 'admin-blender-morph-geo', $blender_meta['morph_geo'], 'morph geometries' );
+    echo adminTextInput( 'admin-blender-rigged-geo', $blender_meta['rigged_geo'], 'rigged geometries' );
+    echo adminTextInput( 'admin-blender-scales', $blender_meta['scales'], 'scales' );
+    ?>
 </div>
 <br>
 <br>
