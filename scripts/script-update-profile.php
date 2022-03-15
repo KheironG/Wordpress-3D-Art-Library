@@ -64,7 +64,7 @@
         $response = array(
             'profile_details'    => $get_profile_details,
             'profile_styling'    => $get_profile_styling,
-            'bio'                => get_post_field( 'post_content', $profile_ID )
+            'bio'                => get_post_field( 'post_content', $current_user->profile_ID )
         );
 
     }

@@ -1662,7 +1662,7 @@ function paginateObjects ( trigger, direction, objectID, origin, outputType, pag
             const response  = JSON.parse(this.response);
             const container = document.getElementById( origin + '-results-content');
             const loader    = document.getElementById( origin + '-results-loader');
-            
+
             //If output on page-discover.php
             if ( typeof response === 'object' && 'discover' in response ) {
                 const postObjects = Object.entries(response.discover);
