@@ -99,7 +99,6 @@ if ( is_admin() ) {
 }
 
 
-
 /**
  * Enables custom logo.
  *
@@ -118,64 +117,74 @@ function custom_logo() {
 add_action( 'after_setup_theme', 'custom_logo' );
 
 
-//Adds Customizer to admin dashboard menu
-function admin_custom_options() {
-		add_menu_page(
-			'Cuztomizer',
-			'Customizer',
-            'manage_options',
-			'admin-cuztomizer',
-            'customizer_callback',
-			'dashicons-schedule',
-			10
-		);
-	}
-add_action( 'admin_menu', 'admin_custom_options' );
-
-function customizer_callback ( ) {
-    require wp_make_link_relative( get_template_directory() . '/admin/customizer.php' );
-}
-
-function customizer_ajax() {
-    wp_enqueue_script( 'ajax-customizer-script',
-                        get_template_directory_uri().'/admin/js/ajax-customizer.js',
-                        array('jquery')
-                    );
-    wp_localize_script( 'ajax-customizer-script',
-                        'ajax_customizer',
-                        array(
-                            'ajax_url' => admin_url( 'admin-ajax.php' ),
-                            'nonce'    => wp_create_nonce('admin-customizer-nonce')
-                        ));
-}
 if ( is_admin() ) {
+
+    /**
+     * Adds Customizer to admin dashboard menu.
+     *
+     * @since  1.0
+    */
+    function admin_custom_options() {
+    		add_menu_page(
+    			'Cuztomizer',
+    			'Customizer',
+                'manage_options',
+    			'admin-cuztomizer',
+                'customizer_callback',
+    			'dashicons-schedule',
+    			10
+    		);
+    	}
+    add_action( 'admin_menu', 'admin_custom_options' );
+
+    function customizer_callback ( ) {
+        require wp_make_link_relative( get_template_directory() . '/admin/customizer.php' );
+    }
+
+    function customizer_ajax() {
+        wp_enqueue_script( 'ajax-customizer-script',
+                            get_template_directory_uri().'/admin/js/ajax-customizer.js',
+                            array('jquery')
+                        );
+        wp_localize_script( 'ajax-customizer-script',
+                            'ajax_customizer',
+                            array(
+                                'ajax_url' => admin_url( 'admin-ajax.php' ),
+                                'nonce'    => wp_create_nonce('admin-customizer-nonce')
+                            ));
+    }
     add_action( 'admin_enqueue_scripts', 'customizer_ajax' );
 
     function customizer_ajax_callback() {
         require wp_make_link_relative( get_template_directory() . '/admin/scripts/script-customizer.php' );
     }
     add_action( 'wp_ajax_customizer_action', 'customizer_ajax_callback' );
-}
 
 
-//Adds Cache Options to admin dashboard menu
-function admin_cache_options() {
-		add_menu_page(
-			'Cache Options',
-			'Cache Options',
-            'manage_options',
-			'admin-cache-options',
-            'cache_options_callback',
-			'dashicons-schedule',
-			25
-		);
-	}
-if ( is_admin() ) {
+    /**
+     * Adds Cache Options to admin dashboard menu.
+     *
+     * @since  1.0
+    */
+    function admin_cache_options() {
+    		add_menu_page(
+    			'Cache Options',
+    			'Cache Options',
+                'manage_options',
+    			'admin-cache-options',
+                'cache_options_callback',
+    			'dashicons-schedule',
+    			25
+    		);
+    	}
     add_action( 'admin_menu', 'admin_cache_options' );
     function cache_options_callback ( ) {
         require wp_make_link_relative( get_template_directory() . '/admin/cache-options.php' );
     }
+
 }
+
+
 
 
 /**
@@ -459,7 +468,6 @@ if ( is_admin() ) {
 }
 
 
-
 /**
  * Adds values to ID and post name columns for CPT blender.
  *
@@ -506,7 +514,6 @@ register_taxonomy( 'blender_categories',
             'query_var'         => true
         )
 );
-
 
 
 /**
@@ -591,7 +598,6 @@ add_action( 'wp_ajax_nopriv_all_ajax_action', 'all_ajax_callback' );
  *
  * @since  1.0
  *
- * @param  $section
 */
 function private_ajax_callback( ) {
 
@@ -860,73 +866,31 @@ function set_select_inputs ( $input, $value ) {
 function set_home_info_items ( ) {
     ?>
     <script type="text/javascript">
-
         const container = document.getElementById('home-info-item-container');
-
         if ( container !== null ) {
+        const items = container.children;
 
-            const items = container.children;
-
-            if ( window.matchMedia("(min-width: 1000px)").matches ) {
-
-                switch ( items.length  ) {
-                    case 1:
-                        items[0].firstElementChild.className = 'polygon';
-                        break;
-                    case 2:
-                        items[0].firstElementChild.className = 'polygon-top';
-                        items[1].firstElementChild.className = 'polygon-bottom';
-                        break;
-                    case 3:
-                        items[0].firstElementChild.className = 'polygon-top';
-                        items[1].firstElementChild.className = 'rectangle';
-                        items[2].firstElementChild.className = 'polygon-bottom';
-                        break;
-                    case 4:
-                        items[0].firstElementChild.className = 'polygon-top';
-                        items[1].firstElementChild.className = 'rectangle';
-                        items[2].firstElementChild.className = 'rectangle';
-                        items[3].firstElementChild.className = 'polygon-bottom';
-                        for ( let item of items ) {
-                            item.style.flex = 'none';
-                            item.style.width = 'calc( 50% - 10px )';
-                        }
-                        break;
-                    default:
-                        break; }
-
-            }
-
-            if ( window.matchMedia("(max-width: 850px)").matches ) {
-                for ( let item of items ) {
-                    item.style.flex = 'none';
-                    item.style.width = '100%';
-                }
-                switch ( items.length  ) {
-                    case 1:
-                        items[0].firstElementChild.className = 'polygon';
-                        break;
-                    case 2:
-                        items[0].firstElementChild.className = 'polygon-top';
-                        items[1].firstElementChild.className = 'polygon-bottom';
-                        break;
-                    case 3:
-                        items[0].firstElementChild.className = 'polygon-top';
-                        items[1].firstElementChild.className = 'rectangle';
-                        items[2].firstElementChild.className = 'polygon-bottom';
-                        break;
-                    case 4:
-                        items[0].firstElementChild.className = 'polygon-top';
-                        items[1].firstElementChild.className = 'rectangle';
-                        items[2].firstElementChild.className = 'rectangle';
-                        items[3].firstElementChild.className = 'polygon-bottom';
-                        for ( let item of items ) {
-                            item.style.flex = 'none';
-                            item.style.width = 'calc( 50% - 10px )';
-                        }
-                        break;
-                    default:
-                        break; } }
+            switch ( items.length  ) {
+                case 1:
+                    items[0].firstElementChild.className = 'polygon';
+                    break;
+                case 2:
+                    items[0].firstElementChild.className = 'polygon-top';
+                    items[1].firstElementChild.className = 'polygon-bottom';
+                    break;
+                case 3:
+                    items[0].firstElementChild.className = 'polygon-top';
+                    items[1].firstElementChild.className = 'rectangle';
+                    items[2].firstElementChild.className = 'polygon-bottom';
+                    break;
+                case 4:
+                    items[0].firstElementChild.className = 'polygon-top';
+                    items[1].firstElementChild.className = 'rectangle';
+                    items[2].firstElementChild.className = 'rectangle';
+                    items[3].firstElementChild.className = 'polygon-bottom';
+                    break;
+                default:
+                    break; }
         }
     </script>
     <?php
