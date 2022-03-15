@@ -63,6 +63,18 @@ form#admin-customizer-form {
     flex-wrap: wrap;
 }
 
+.customizer-flex {
+    display: flex;
+    grid-gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    cursor: pointer;
+    user-select: none;
+}
+.customizer-flex > i {
+    color: #29A6DE;
+}
+
 .gap-20 {
     grid-gap: 20px;
 }

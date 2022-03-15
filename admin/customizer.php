@@ -5,7 +5,11 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
     <h1>Theme Customizer</h1>
     <form id="admin-customizer-form" method="post">
         <?php $linkable_pages = get_pages( array( 'post_status' => array( 'publish' ) ) ); ?>
-        <div class="fieldset">
+        <div class="customizer-flex" onclick="toggleCustomizerSections(this, 'page-header')">
+            <h4>Page Header Options</h4>
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="fieldset page-header hide">
             <?php $header_primary_nav = get_option( 'header_primary_nav' ) ?>
             <div>
                 <h4 class="no-margin">header primary navigation</h4>
@@ -36,8 +40,11 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
             </div>
             <?php echo set_radio_inputs( $header_primary_nav['menu_item_style'], 'menu-item-style' ); ?>
          </div>
-        <h4>Home Page Options</h4>
-        <div class="fieldset">
+        <div class="customizer-flex" onclick="toggleCustomizerSections(this, 'home-page')">
+             <h4>Home Page Options</h4>
+             <i class="fas fa-plus"></i>
+        </div>
+        <div class="fieldset home-page hide">
             <div>
                 <h5 class="no-margin">info items</h5>
                 <p>box style items that display on the front page,
@@ -61,8 +68,11 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
                 ?>
             </div>
         </div>
-        <h4>Connect Page Options</h4>
-        <div class="fieldset">
+        <div class="customizer-flex" onclick="toggleCustomizerSections(this, 'connect-page')">
+             <h4>Connect Page Options</h4>
+             <i class="fas fa-plus"></i>
+        </div>
+        <div class="fieldset connect-page hide">
             <div>
                 <h5 class="no-margin">connect links</h5>
                 <p>displays icon style links on connect page.</p>
@@ -80,8 +90,11 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
                 ?>
             </div>
         </div>
-        <h4>Footer Options</h4>
-        <div class="fieldset">
+        <div class="customizer-flex" onclick="toggleCustomizerSections(this, 'footer')">
+             <h4>Footer Options</h4>
+             <i class="fas fa-plus"></i>
+        </div>
+        <div class="fieldset footer hide">
             <div>
                 <h5 class="no-margin">footer primary navigation</h5>
                 <p>for communicating information about and linking users to specific pages.</p>
@@ -97,15 +110,18 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
                 ?>
             </div>
         </div>
-        <?php $footer_copyright = get_option( 'footer_copyright' ); ?>
-        <div class="fieldset">
+        <div class="fieldset footer hide">
+            <?php $footer_copyright = get_option( 'footer_copyright' ); ?>
             <div class="admin-flex-container">
                 <?php echo adminTextInput( 'footer-copyright',
                                                     $footer_copyright['footer_copyright'], 'copyright notice' ); ?>
             </div>
         </div>
-        <h4>Custom settings</h4>
-        <div class="fieldset">
+        <div class="customizer-flex" onclick="toggleCustomizerSections(this, 'custom-settings')">
+             <h4>Custom settings</h4>
+             <i class="fas fa-plus"></i>
+        </div>
+        <div class="fieldset custom-settings hide">
             <div>
                 <h5 class="no-margin">paginators</h5>
                 <p>number of post to display per page (integer value).</p>
@@ -123,6 +139,8 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
                 echo adminTextInput( 'paginator-blog', $paginators['paginator_blog'], 'blog page' );
                 ?>
             </div>
+        </div>
+        <div class="fieldset custom-settings hide">
         </div>
         <div class="text-right" id="admin-customizer-response"></div>
         <div class="text-right">

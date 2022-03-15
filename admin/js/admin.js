@@ -29,3 +29,27 @@ function uploadBlenderFile() {
         }).open();
         return;
 }
+
+function toggleCustomizerSections ( trigger, section ) {
+
+    //If click on expanded
+    if ( trigger.lastElementChild.className === 'fas fa-minus' ) {
+        const allSections = document.getElementsByClassName(section);
+        for ( let sections of allSections ) {
+            sections.classList.add('hide'); }
+        trigger.lastElementChild.className = 'fas fa-plus'
+        return; }
+
+    //If clicked on closed
+    const allTitles = document.querySelectorAll('.customizer-flex');
+    for ( let title of allTitles ) {
+        title.lastElementChild.className = 'fas fa-plus'; }
+    trigger.lastElementChild.className = 'fas fa-minus';
+    const allSections = document.querySelectorAll('.fieldset');
+    for ( let sections of allSections ) {
+        if ( sections.classList.contains(section) ) {
+            sections.classList.remove('hide'); }
+        else {
+            sections.classList.add('hide'); } }
+    return;
+}
