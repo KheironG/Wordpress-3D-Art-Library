@@ -51,7 +51,7 @@
         exit;
     }
 
-    if ( empty( $message ) ) {
+    if ( empty( $message ) || ctype_space( $message ) ) {
         $error['message'] = 'message required.';
         echo json_encode( $error );
         exit;
