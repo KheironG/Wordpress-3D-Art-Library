@@ -42,17 +42,17 @@
 
 
     $password = $wpdb->prepare( $data->pass );
-    if ( empty( $password ) ) {
+    if ( empty( $password ) || ctype_space( $password ) ) {
         array_push( $errors['password'], 'required.' ); }
-    if ( !empty( $password) && stripos( $password, ' ' ) ) {
+    if ( !empty( $password) && !ctype_space( $password ) && stripos( $password, ' ' ) ) {
         array_push( $errors['password'], 'password cannot contain spaces.' ); }
-    if ( !empty( $password) && strlen( $password ) < 6 ) {
+    if ( !empty( $password) && !ctype_space( $password ) && strlen( $password ) < 6 ) {
         array_push( $errors['password'], 'password must be 6 characters or more.' ); }
 
     $confirm_password = $wpdb->prepare( $data->confirm_pass );
-    if ( empty( $confirm_password ) ) {
+    if ( empty( $confirm_password ) || ctype_space( $confirm_password ) ) {
         array_push( $errors['confirm'], 'required.' ); }
-    if ( !empty( $confirm_password ) && strcmp( $password, $confirm_password ) !== 0 ) {
+    if ( !empty( $confirm_password ) && !ctype_space( $confirm_password ) && strcmp( $password, $confirm_password ) !== 0 ) {
         array_push( $errors['confirm'], 'passwords do not match.' ); }
 
     foreach ($errors as $error ) {
