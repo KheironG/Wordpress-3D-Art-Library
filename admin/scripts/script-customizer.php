@@ -17,6 +17,7 @@
 
     $header_primary_nav  = array();
     $info_items          = array();
+    $home_previews       = array();
     $admin_connect_links = array();
     $footer_primary_nav  = array();
     $footer_copyright    = array();
@@ -34,11 +35,14 @@
             $footer_copyright[$option_instance[0]] = $option_instance[1]; }
         if ( preg_match( '/paginator/', $option_instance[0] ) ) {
             $paginators[$option_instance[0]] = $option_instance[1]; }
+        if ( preg_match( '/home_previews/', $option_instance[0] ) ) {
+            $home_previews[$option_instance[0]] = $option_instance[1]; }
     }
 
     $compiled_options = array(
         'header_primary_nav'  => $header_primary_nav,
         'info_items'          => $info_items,
+        'home_previews'       => $home_previews,
         'admin_connect_links' => $admin_connect_links,
         'footer_primary_nav'  => $footer_primary_nav,
         'footer_copyright'    => $footer_copyright,

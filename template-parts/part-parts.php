@@ -264,6 +264,24 @@ function adminTextInput( $name, $value, $label ) {
     <?php
 }
 
+function adminHomePreviewsSelect( $option, $object ) {
+    ?>
+    <div>
+        <label for="<?php echo $option; ?>">show</label>
+        <select id="<?php echo $option; ?>" name="<?php echo $option; ?>">
+            <option value="" disabled selected>select</option>
+            <option value="category">with category</option>
+            <option value="latest">latest</option>
+            <option value="none">none</option>
+        </select>
+    </div>
+    <?php
+    if ( !empty( $object ) ) {
+        echo set_select_inputs( $option, $object ); }
+    ?>
+    <?php
+}
+
 //SECTIONS
 function resultsSection( $origin ) {
     ?>

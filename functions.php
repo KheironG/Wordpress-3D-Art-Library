@@ -322,7 +322,7 @@ function create_cpt_blender() {
             'show_in_menu'          => true,
             'menu_position'         => 26,
             'description'           => 'Blender Object',
-            'supports'              => array( 'title', 'author','comments', 'thumbnail', 'excerpt' ),
+            'supports'              => array( 'title', 'comments', 'thumbnail', 'excerpt' ),
             'menu_icon'             => 'dashicons-format-image',
             'taxonomies'            => array( 'post_tag' ),
             'register_meta_box_cb'  => 'cpt_blender_metabox',

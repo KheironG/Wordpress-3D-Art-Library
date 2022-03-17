@@ -91,6 +91,7 @@ form#admin-customizer-form {
 .admin-flex-container > div > div > input[type=text],
 .admin-flex-container > div > div > input[type=url],
 .admin-flex-container > div > div > select,
+select.custom-select,
 .admin-flex-container > div > input[type=text],
 .admin-flex-container > div > input[type=url],
 .admin-flex-container > div > select {
@@ -98,6 +99,8 @@ form#admin-customizer-form {
     width: 350px;
     height: 35px;
 }
+
+
 
 label,
 .label {

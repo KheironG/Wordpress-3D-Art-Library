@@ -1,13 +1,13 @@
 <?php
-$blender_meta     = get_post_meta( get_the_ID(), 'blender_meta', true );
-$license          = get_post_meta( get_the_ID(), 'license', true  );
-$allow_download   = get_post_meta( get_the_ID(), 'allow_download', true  );
-$get_blender_file = get_attached_media( 'application/octet-stream', get_the_ID() );
+$blender_meta     = get_post_meta( $post->ID, 'blender_meta', true );
+$license          = get_post_meta( $post->ID, 'license', true  );
+$allow_download   = get_post_meta( $post->ID, 'allow_download', true  );
+$get_blender_file = get_attached_media( 'application/octet-stream', $post->ID );
 if ( !empty( $get_blender_file) ) {
     $file_ID      = array_key_first( $get_blender_file );
     $file_name    = $get_blender_file[$file_ID]->post_name . '.blend';
 }
-$categories       = wp_get_object_terms( get_the_ID(), 'blender_categories' );
+$categories       = wp_get_object_terms( $post->ID, 'blender_categories' );
 wp_nonce_field( 'blender_metabox_nonce_action', 'blender-metabox-nonce' );
 require wp_make_link_relative( get_template_directory() . '/template-parts/part-parts.php')
 ?>

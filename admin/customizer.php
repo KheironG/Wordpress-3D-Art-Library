@@ -47,7 +47,7 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
         <div class="fieldset home-page hide">
             <div>
                 <h5 class="no-margin">info items</h5>
-                <p>box style items that display on the front page,
+                <p>box style items that display on the home page,
                     for communication information and/or linking users to specific pages.
                 </p>
             </div>
@@ -65,6 +65,27 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
                 echo customizerItem ( 'info-item', 'two', $linkable_pages, $info_items );
                 echo customizerItem ( 'info-item', 'three', $linkable_pages, $info_items );
                 echo customizerItem ( 'info-item', 'four', $linkable_pages, $info_items );
+                ?>
+            </div>
+        </div>
+        <div class="fieldset home-page hide">
+            <h4 class="no-margin">previews</h4>
+            <p>settings for 3d objects and artist profile previews on home page.</p>
+            <br>
+            <h5>3D object previews</h5>
+            <div class="admin-flex-container">
+                <?php
+                $home_previews = get_option( 'home_previews' );
+                echo adminTextInput( 'home-previews-blender-amount', $home_previews['home_previews_blender_amount'], 'amount' );
+                echo adminHomePreviewsSelect( 'home-previews-blender-show', $home_previews['home_previews_blender_show'] );
+                ?>
+            </div>
+            <br>
+            <h5>profile previews</h5>
+            <div class="admin-flex-container">
+                <?php
+                echo adminTextInput( 'home-previews-profile-amount', $home_previews['home_previews_profile_amount'], 'amount'  );
+                echo adminHomePreviewsSelect( 'home-previews-profile-show', $home_previews['home_previews_profile_show'] );
                 ?>
             </div>
         </div>
@@ -113,8 +134,7 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
         <div class="fieldset footer hide">
             <?php $footer_copyright = get_option( 'footer_copyright' ); ?>
             <div class="admin-flex-container">
-                <?php echo adminTextInput( 'footer-copyright',
-                                                    $footer_copyright['footer_copyright'], 'copyright notice' ); ?>
+                <?php echo adminTextInput( 'footer-copyright', $footer_copyright['footer_copyright'], 'copyright notice' ); ?>
             </div>
         </div>
         <div class="customizer-flex" onclick="toggleCustomizerSections(this, 'custom-settings')">
@@ -139,8 +159,6 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
                 echo adminTextInput( 'paginator-blog', $paginators['paginator_blog'], 'blog page' );
                 ?>
             </div>
-        </div>
-        <div class="fieldset custom-settings hide">
         </div>
         <div class="text-right" id="admin-customizer-response"></div>
         <div class="text-right">
