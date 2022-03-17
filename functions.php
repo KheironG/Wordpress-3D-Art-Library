@@ -181,8 +181,6 @@ if ( is_admin() ) {
 }
 
 
-
-
 /**
  * Sets up CPT profile.
  *
@@ -306,6 +304,37 @@ function save_cpt_profile( $post_id ) {
 if ( is_admin () ) {
     add_action( 'save_post_profile', 'save_cpt_profile' );
 }
+
+
+if ( is_admin() ) {
+    /**
+     * The submenu page for creating new profile in admin.
+     *
+     * @since  1.0
+     *
+    */
+    function register_create_profile_menu () {
+        add_submenu_page(
+            'edit.php?post_type=profile',
+            'Create Profile',
+            'Create Profile',
+            'manage_options',
+            'admin-create-profile',
+            'admin_create_profile'
+        );
+    }
+
+    /**
+     * Display callback for the create profile submenu page.
+     */
+    function admin_create_profile() {
+        require wp_make_link_relative( get_template_directory() . '/admin/create-profile.php' );
+    }
+}
+add_action('admin_menu', 'register_create_profile_menu');
+
+
+
 
 
 /**
@@ -866,28 +895,27 @@ function set_home_info_items ( ) {
         const container = document.getElementById('home-info-item-container');
         if ( container !== null ) {
         const items = container.children;
-
-            switch ( items.length  ) {
-                case 1:
-                    items[0].firstElementChild.className = 'polygon';
-                    break;
-                case 2:
-                    items[0].firstElementChild.className = 'polygon-top';
-                    items[1].firstElementChild.className = 'polygon-bottom';
-                    break;
-                case 3:
-                    items[0].firstElementChild.className = 'polygon-top';
-                    items[1].firstElementChild.className = 'rectangle';
-                    items[2].firstElementChild.className = 'polygon-bottom';
-                    break;
-                case 4:
-                    items[0].firstElementChild.className = 'polygon-top';
-                    items[1].firstElementChild.className = 'rectangle';
-                    items[2].firstElementChild.className = 'rectangle';
-                    items[3].firstElementChild.className = 'polygon-bottom';
-                    break;
-                default:
-                    break; }
+        switch ( items.length  ) {
+            case 1:
+                items[0].firstElementChild.className = 'polygon';
+                break;
+            case 2:
+                items[0].firstElementChild.className = 'polygon-top';
+                items[1].firstElementChild.className = 'polygon-bottom';
+                break;
+            case 3:
+                items[0].firstElementChild.className = 'polygon-top';
+                items[1].firstElementChild.className = 'rectangle';
+                items[2].firstElementChild.className = 'polygon-bottom';
+                break;
+            case 4:
+                items[0].firstElementChild.className = 'polygon-top';
+                items[1].firstElementChild.className = 'rectangle';
+                items[2].firstElementChild.className = 'rectangle';
+                items[3].firstElementChild.className = 'polygon-bottom';
+                break;
+            default:
+                break; }
         }
     </script>
     <?php
