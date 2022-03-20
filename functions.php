@@ -243,68 +243,6 @@ if ( is_admin() ) {
 }
 
 
-/**
- * Saves and updates post of CPT profile in admin.
- *
- * @since  1.0
- *
- * @global $post_id
-*/
-function save_cpt_profile( $post_id ) {
-
-    if ( defined( 'DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return;
-    }
-
-    if ( ! current_user_can( 'edit_post', $post_id ) ) {
-            print_r( 'Sorry, you do not have access to edit post.' );
-            exit;
-    }
-
-    $post         = get_post( $post_id );
-    $author       = $post->post_author;
-    $user_data    = get_userdata( $post->post_author );
-    $user_name    = $user_data->display_name;
-    global $wpdb;
-    $user_has_profile = $wpdb->get_results( "SELECT ID
-                                             FROM wp_posts
-                                             WHERE post_title = $profile_name
-                                             AND post_name = $profile_name
-                                             AND post_author = $author "
-                                         );
-
-    if ( count( $user_has_profile ) === 0 || empty( $user_has_profile ) )  {
-
-    }
-
-    $remove_these = array_slice( $get_blender_file, 1 );
-    foreach ( $remove_these as $remove_this ) {
-        wp_delete_attachment( $remove_this->ID, true );
-    }
-
-    $profile_details = array(
-        'country'       => sanitize_text_field( $_POST[ 'admin-profile-country' ] ),
-        'city'          => sanitize_text_field( $_POST[ 'admin-profile-city' ] )
-    );
-    update_post_meta( $post_id, 'profile_details', $profile_details  );
-    update_user_meta( $post->post_author, 'profile_details', $profile_details );
-
-    $profile_social = array(
-        'website'   => esc_url_raw( $_POST['admin-profile-website'] ),
-        'facebook'  => esc_url_raw( $_POST['admin-profile-facebook'] ),
-        'instagram' => esc_url_raw( $_POST['admin-profile-instagram'] ),
-        'twitter'   => esc_url_raw( $_POST['admin-profile-twitter'] ),
-        'youtube'   => esc_url_raw( $_POST['admin-profile-youtube'] ),
-        'linkedin'  => esc_url_raw( $_POST['admin-profile-linkedin'] )
-    );
-    update_post_meta( $post_id, 'profile_social', $profile_social  );
-    update_user_meta( $post->post_author, 'profile_social', $profile_social );
-
-}
-if ( is_admin () ) {
-    add_action( 'save_post_profile', 'save_cpt_profile' );
-}
-
 
 if ( is_admin() ) {
     /**
@@ -332,8 +270,6 @@ if ( is_admin() ) {
     }
 }
 add_action('admin_menu', 'register_create_profile_menu');
-
-
 
 
 
@@ -399,18 +335,15 @@ function cpt_blender_metabox_callback( $post ) {
 function save_cpt_blender( $post_id ) {
 
     if ( defined( 'DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-		return;
-	}
+		return;  }
 
 	if ( ! current_user_can( 'edit_posts', $post_id ) ) {
 			print_r( 'Sorry, you do not have access to edit post.' );
-			exit;
-	}
+			exit; }
 
 	if ( ! isset( $_POST['blender-metabox-nonce'] )
         || ! wp_verify_nonce( $_POST['blender-metabox-nonce'], 'blender_metabox_nonce_action' ) ) {
-		return null;
-	}
+		return null; }
 
     global $wpdb;
 
@@ -454,7 +387,7 @@ function save_cpt_blender( $post_id ) {
        foreach ( $remove_these as $remove_this ) {
            wp_delete_attachment( $remove_this->ID, true ); } }
 
-    // If has one blender file attachment, rename and update
+    // If has 1 blender file attachment, rename and update
     if ( count( $get_blender_file ) === 1 ) {
         $file_ID       = array_key_first( $get_blender_file );
         $upload_dir    = wp_upload_dir();
@@ -463,18 +396,16 @@ function save_cpt_blender( $post_id ) {
         $new_file      = $path['dirname'] . '/' . $post_name . '.' . $path['extension'];
         $rename        = rename( $file, $new_file );
         $update_file   = update_attached_file( $file_ID, $new_file );
-        $wpdb->update( 'wp_posts', array( 'post_name' => $post_name ), array( 'ID' => $file_ID ) );
-    }
+        $wpdb->update( 'wp_posts', array( 'post_name' => $post_name ), array( 'ID' => $file_ID ) ); }
 
     // If has no blender file attachment, maintain post_status draft
     if ( count( $get_blender_file ) === 0 ) {
         $wpdb->update( 'wp_posts', array( 'post_status' => 'draft' ), array( 'ID' => $post_id ) );
-        $alert_message = 'Post cannot be published without attaching blender file';
-    }
+        $alert_message = 'Post cannot be published without attaching blender file'; }
+
 }
 if ( is_admin () ) {
-    add_action( 'save_post_blender', 'save_cpt_blender' );
-}
+    add_action( 'save_post_blender', 'save_cpt_blender' ); }
 
 
 /**
@@ -490,8 +421,7 @@ function set_blender_columns( $columns ) {
     return $columns;
 }
 if ( is_admin() ) {
-    add_filter( 'manage_blender_posts_columns', 'set_blender_columns' );
-}
+    add_filter( 'manage_blender_posts_columns', 'set_blender_columns' ); }
 
 
 /**
@@ -523,23 +453,6 @@ function allow_blend_upload( $existing_mimes ) {
     return $existing_mimes;
 }
 add_filter( 'mime_types', 'allow_blend_upload' );
-
-
-/**
- * Registers taxonomy blender_categories for CPT blender and profile
- *
- * @since  1.0
-*/
-register_taxonomy( 'blender_categories',
-    array( 'blender', 'profile' ),
-    array(  'hierarchical'      => true,
-            'label'             => 'Blender Categories',
-            'show_ui'           => true,
-            'show_in_rest'      => true,
-            'show_admin_column' => true,
-            'query_var'         => true
-        )
-);
 
 
 /**
@@ -731,7 +644,21 @@ function register_default_taxonomy() {
    register_taxonomy_for_object_type( 'post_tag', 'profile' ); }
 add_action('init', 'register_default_taxonomy');
 
-
+/**
+ * Registers taxonomy blender_categories for CPT blender and profile
+ *
+ * @since  1.0
+*/
+register_taxonomy( 'blender_categories',
+    array( 'blender', 'profile' ),
+    array(  'hierarchical'      => true,
+            'label'             => 'Blender Categories',
+            'show_ui'           => true,
+            'show_in_rest'      => true,
+            'show_admin_column' => true,
+            'query_var'         => true
+        )
+);
 
 /**
  *Limits post excerpt length.
@@ -1140,10 +1067,10 @@ function set_gallery_case( $selected ) {
  *
  * @since  1.0
  */
-function retrieve_comments( $is_parent, $parent ) {
+function retrieve_comments( ) {
     ?>
     <script type="text/javascript">
-        getComments( '<?php echo $is_parent ?>', '<?php echo $parent ?>' );
+        getParentComments();
     </script>
     <?php
     return; }
