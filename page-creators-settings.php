@@ -79,7 +79,8 @@ if ( $current_user->ID !== 0 || is_user_logged_in() ) {
                             <br>
                             <h4>details</h4>
                             <div>
-                                <textarea id="update-profile-bio" class="custom-textarea" name="profile-bio" rows="4" maxlength="250"><?php echo esc_html( $bio ); ?></textarea>
+                                <textarea id="update-profile-bio" class="custom-textarea" name="profile-bio" rows="4"
+                                    maxlength="250"><?php echo esc_html( $bio ); ?></textarea>
                                 <label for="profile-bio">bio</label>
                             </div>
                                 <?php
@@ -90,13 +91,15 @@ if ( $current_user->ID !== 0 || is_user_logged_in() ) {
                             <hr>
                             <h4>styling</h4>
                             <div>
+                                <?php $background = $current_user->profile_styling['background']; ?>
                                 <input id="update-profile-background" type="color" name="profile-background"
-                                    value="<?php echo $current_user->profile_styling['background']; ?>">
+                                    value="<?php echo !empty( $background ) ? $background : '#F7F7F7'; ?>">
                                 <label for="profile-background">background colour</label>
                             </div>
                             <div>
+                                <?php $colour = $current_user->profile_styling['colour']; ?>
                                 <input id="update-profile-contrast-colour" type="color" name="profile-contrast-colour"
-                                    value="<?php echo $current_user->profile_styling['colour']; ?>">
+                                    value="<?php echo !empty( $colour ) ? $colour : '#333333'; ?>">
                                 <label for="profile-contrast-colour">contrast colour</label>
                             </div>
                             <div class="text-right">
