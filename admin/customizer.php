@@ -160,30 +160,6 @@ require wp_make_link_relative( get_template_directory() . '/template-parts/part-
                 ?>
             </div>
         </div>
-<<<<<<< HEAD
-=======
-        <div class="fieldset custom-settings hide">
-            <h5 class="no-margin">blender previews</h5>
-            <p>settings applied to blender previews on page-home.php.</p>
-            <div class="admin-flex-container">
-                <?php
-                $blender_previews = get_option( 'blender_previews' );
-                echo adminTextInput('blender-previews-amount', $blender_previews['amount'], 'number of previews'  ) ?>
-                <div>
-                    <label for="blender-previews-show">show</label>
-                    <select id="blender-previews-show" name="blender-previews-show">
-                        <option value="" disabled selected>select</option>
-                        <option value="category">with category</option>
-                        <option value="latest">latest</option>
-                    </select>
-                </div>
-                <?php
-                if ( !empty( $blender_previews['show'] ) ) {
-                    echo set_select_inputs( 'blender-previews-show', $blender_previews['show'] ); }
-                ?>
-            </div>
-        </div>
->>>>>>> 00d7e376e869f6bef07b7051c98dd2fd22f03a4f
         <div class="text-right" id="admin-customizer-response"></div>
         <div class="text-right">
             <button type="button" class="button button-primary" name="save-customizer" onclick="adminCustomizer();">save</button>
