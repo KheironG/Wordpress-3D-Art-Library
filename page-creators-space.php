@@ -7,7 +7,7 @@ if ( !is_user_logged_in() || $current_user->ID == 0 ) {
     <div class="polygon">
         <div class="container-inner">
             <div class="flex-container-center">
-                <img class="logo-cube" src="<?php echo get_template_directory_uri() . '/img/3D-cube.png'; ?>" alt="">
+                <img class="logo-cube" src="<?php echo get_template_directory_uri() . '/img/3D-cube.png'; ?>">
                 <h3>artist's space</h3>
             </div>
             <div class="text-center">

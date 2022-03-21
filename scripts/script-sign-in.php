@@ -15,16 +15,14 @@
     if ( is_wp_error( $authenticate ) ) {
         $error['error'] = 'invalid credentials.';
         echo json_encode( $error );
-        exit;
-    }
+        exit; }
 
     $activate = get_user_meta( $authenticate->ID, 'account_activation_key', true );
 
     if ( $activate === "" || $activate === false ) {
         $sign_in_creds = array(
             'user_login'    => $email,
-            'user_password' => $password
-        );
+            'user_password' => $password );
 
         $sign_in = wp_signon( $sign_in_creds, true );
 
@@ -34,24 +32,21 @@
             exit;
         }
 
-        wp_set_current_user( $sign_in->ID );
+        $current_user = wp_set_current_user( $sign_in->ID );
 
-        if ( $sign_in->roles[0] !== 'administrator' ) {
-            $sign_in_link = get_user_meta( $sign_in->ID, 'profile_link', true );
-        } else {
-            $sign_in_link = get_home_url() . '/admin';
-        }
+        if ( in_array( 'author', (array) $current_user->roles ) ) {
+            $sign_in_link = get_home_url() . '/profile/' . $current_user->display_name; }
+        else {
+            $sign_in_link = get_home_url() . '/admin'; }
 
         if ( empty( $sign_in_link ) ) {
             $error['error'] = 'unable to sign you in.';
             echo json_encode( $error );
-            exit;
-        }
+            exit; }
 
         $response = array( 'sign_in' => $sign_in_link );
         echo json_encode( $response );
-        exit;
-    }
+        exit; }
 
     $activate = array( 'activate' => get_home_url() . '/activate-account' );
     echo json_encode( $activate );
