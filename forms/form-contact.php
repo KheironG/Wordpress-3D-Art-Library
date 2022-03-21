@@ -18,8 +18,7 @@ function generateContactInput( $id, $type, $name, $label ) {
         echo generateContactInput( 'contact-subject', 'text', 'contact-subject', 'subject' );
         ?>
         <div id="contact-message" class="text-right">
-            <textarea class="custom-textarea" name="contact-message" rows="5" maxlength="1000">
-            </textarea>
+            <textarea class="custom-textarea" name="contact-message" rows="5" maxlength="1000"></textarea>
             <label for="contact-message">message*</label>
         </div>
         <?php
@@ -32,8 +31,7 @@ function generateContactInput( $id, $type, $name, $label ) {
         echo generateContactInput( 'contact-subject', 'text', 'contact-subject', 'subject' );
         ?>
         <div id="contact-message">
-            <textarea class="custom-textarea" name="contact-message" rows="5" maxlength="1000">
-            </textarea>
+            <textarea class="custom-textarea" name="contact-message" rows="5" maxlength="1000"></textarea>
             <label for="contact-message">message*</label>
         </div>
         <?php
@@ -42,20 +40,16 @@ function generateContactInput( $id, $type, $name, $label ) {
         $option;
         //Contacting profile as user
         if ( $current_user->ID !== 0 && is_single() ) {
-            $option = 'profile-as-user';
-        }
+            $option = 'profile-as-user'; }
         //Contacting profile as public
         if ( $current_user->ID === 0 && is_single() ) {
-            $option = 'profile-as-public';
-        }
+            $option = 'profile-as-public'; }
         //Contacting admin as user
         if ( $current_user->ID !== 0 && is_page( 'connect' ) ) {
-            $option = 'admin-as-user';
-        }
+            $option = 'admin-as-user'; }
         //Contacting admin as public
         if ( $current_user->ID === 0 && is_page( 'connect' ) ) {
-            $option = 'admin-as-public';
-        }
+            $option = 'admin-as-public'; }
         ?>
         <div class="text-right">
             <button class="button" id="contact-submit"
