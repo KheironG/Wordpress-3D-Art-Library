@@ -32,7 +32,7 @@ function privateMenu( $user ) {
     if ( is_user_logged_in() && $user->ID != 0 ) {
     ?>
     <div id="private-links">
-        <a class="private-menu-icon" href="<?php echo $user->profile_link; ?>">
+        <a class="private-menu-icon" href="<?php echo get_home_url() . '/profile/' . $user->display_name; ?>">
             <span class="fas fa-user fa-2x"></span>
             <small>profile</small>
         </a>
