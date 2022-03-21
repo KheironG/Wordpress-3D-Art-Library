@@ -2,7 +2,6 @@
 if ( isset( $_POST['admin-create-profile'] ) ) {
     $get_user = get_user_by( 'login', $_POST['admin-create-profile-name'] );
     $user_has_profile = get_posts( array( 'post_type' => 'profile', 'author' => $get_user->ID ) );
-
     if ( !empty( $user_has_profile ) ) {
         $error = 'this artist already has a profile.'; }
     else {
@@ -18,7 +17,7 @@ if ( isset( $_POST['admin-create-profile'] ) ) {
         if ( is_wp_error( $create_profile ) ) {
             $error = 'unable to create profile.'; }
         else {
-            $add_profile_ID_to_user = update_user_meta( $get_user->ID, 'profile_ID', $create_profiles );
+            $add_profile_ID_to_user = update_user_meta( $get_user->ID, 'profile_ID', $create_profile );
             $add_cover_ID_to_user   = update_user_meta( $get_user->ID, 'cover_ID', 'default' );
             $add_cover_link_to_user = update_user_meta(
                                             $get_user->ID,
@@ -32,14 +31,14 @@ if ( isset( $_POST['admin-create-profile'] ) ) {
             $set_category = wp_set_object_terms( $create_profile,
                                                  strtolower( $get_user->display_name[0] ),
                                                  'profile_initials' );
+                                                 $user = wp_get_current_user();
+             if ( !in_array( 'author', (array) $get_user->roles ) ) {
+                 $get_user->add_role( 'author' ); }
             $success = 'profile created.';
-        }
-    }
-}
-
+            print_r($get_user);
+         } } }
 require wp_make_link_relative( get_template_directory() . '/template-parts/part-parts.php');
 ?>
-
 <div class="admin-main-container">
     <div class="admin-flex-container">
         <img class="logo-cube" src="<?php echo get_template_directory_uri() . '/img/3D-cube.png'; ?>">
