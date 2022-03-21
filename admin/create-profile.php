@@ -35,7 +35,6 @@ if ( isset( $_POST['admin-create-profile'] ) ) {
              if ( !in_array( 'author', (array) $get_user->roles ) ) {
                  $get_user->add_role( 'author' ); }
             $success = 'profile created.';
-            print_r($get_user);
          } } }
 require wp_make_link_relative( get_template_directory() . '/template-parts/part-parts.php');
 ?>
